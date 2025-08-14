@@ -117,7 +117,7 @@ subMenuEl.style.top = `0`;
 
 // Select and cache the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
 const topMenuLinks = topMenuEl.querySelectorAll(`a`);
-console.log(topMenuLinks);
+//console.log(topMenuLinks);
 // Attach a delegated 'click' event listener to topMenuEl.
 topMenuEl.addEventListener('click', clickEvent);
 
@@ -125,29 +125,50 @@ function clickEvent(e){
   // The first line of code of the event listener function should call the event object's preventDefault() method.
   e.preventDefault;
   // The second line of code of the function should immediately return if the element clicked was not an <a> element.
-  console.log(e.target.nodeName);
+  //console.log(e.target.nodeName);
   if(e.target.nodeName != 'A'){
     return;
   }
   // Log the content of the <a> to verify the handler is working.
-  console.log(e.target.textContent);
-
-  // The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
-  topMenuLinks.forEach(link => {
+  const content = e.target.textContent
+  //console.log(content);
+  if(e.target.classList.contains('active')){
+    e.target.classList.toggle(`active`);
+  }
+  else{ topMenuLinks.forEach(link => {
   link.classList.remove('active');
 })
+  e.target.classList.toggle(`active`);
+}
+  // The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
+ 
 
 // The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
 
-  e.target.classList.toggle(`active`);
+  
   
 // Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
     // If the clicked <a> element's "link" object within menuLinks has a subLinks property (all do, except for the "link" object for ABOUT), set the CSS top property of subMenuEl to 100%.
-  if(e.target.classList.contains('active')){
-    
+
+  for(link of menuLinks){
+    if(link.text != content){
+      continue;
+    }
+    console.log(e.target.classList.contains('active'));
+     if(e.target.classList.contains('active')){
+      if('subLinks' in link){
+        console.log(subMenuEl.style.top)
+        subMenuEl.style.top = '100%';
+       }
+    } else {
+      console.log('testing');
+      subMenuEl.style.top = '0';}
   }
+  
 
 }
+
+// The submenu needs to be dynamic based on the clicked link. To facilitate that, we will create a helper function called buildSubmenu that does the following:
 
 
 
