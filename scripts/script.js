@@ -120,10 +120,10 @@ const topMenuLinks = topMenuEl.querySelectorAll(`a`);
 //console.log(topMenuLinks);
 // Attach a delegated 'click' event listener to topMenuEl.
 topMenuEl.addEventListener('click', clickEvent);
-
+// console.log(topMenuLinks);
 function clickEvent(e){
   // The first line of code of the event listener function should call the event object's preventDefault() method.
-  e.preventDefault;
+  e.preventDefault();
   // The second line of code of the function should immediately return if the element clicked was not an <a> element.
   //console.log(e.target.nodeName);
   if(e.target.nodeName != 'A'){
@@ -156,18 +156,57 @@ function clickEvent(e){
     }
     console.log(e.target.classList.contains('active'));
      if(e.target.classList.contains('active')){
+      if(e.target.textContent == 'about'){
+        mainEl.innerHTML = '<h1>ABOUT</h1>';
+      }
       if('subLinks' in link){
         buildSubmenu(subMenuEl, link.subLinks);
         console.log(subMenuEl.style.top)
         subMenuEl.style.top = '100%';
        }
     } else {
-      console.log('testing');
       subMenuEl.style.top = '0';}
   }
   
 
 }
+
+// The menu is almost complete! Now, we need to add interactions to the submenu items themselves:
+// Attach a delegated 'click' event listener to subMenuEl.
+
+subMenuEl.addEventListener('click', subClickEvent);
+
+
+function subClickEvent(e){
+  // The first line of code of the event listener function should call the event object's preventDefault() method.
+  e.preventDefault();
+
+  // The second line of code within the function should immediately return if the element clicked was not an <a> element.
+  if(e.target.nodeName != 'A'){
+    return;
+  }
+// Log the content of the <a> to verify the handler is working.
+  console.log(e.target.textContent);
+// Next, the event listener should set the CSS top property of subMenuEl to 0.
+  subMenuEl.style.top = '0';
+// Remove the active class from each <a> element in topMenuLinks.
+  topMenuLinks.forEach(link => {
+  link.classList.remove('active');
+  });
+// Update the contents of mainEl, within an <h1>, to the contents of the <a> element clicked within subMenuEl.
+  targetString = e.target.textContent
+  mainEl.innerHTML = `<h1>${targetString.toUpperCase()}</h1>`;
+// If the ABOUT link is clicked, an <h1>About</h1> should be displayed.
+    // I Added this code to line 160 inside the topMenuEl event listener function
+}
+
+
+
+
+
+
+
+
 
 // The submenu needs to be dynamic based on the clicked link. To facilitate that, we will create a helper function called buildSubmenu that does the following:
 
@@ -175,74 +214,22 @@ function clickEvent(e){
 
 function buildSubmenu(subMenuEl, subLinks){
   subMenuEl.innerHTML = '';
+  // Iterate over the subLinks array, passed as an argument, and for each "link" object:
   for(link of subLinks){
+    // Create an <a> element.
     const a = document.createElement('a');
+    // Add an href attribute to the <a>, with the value set by the href property of the "link" object.
     a.setAttribute('href', link.href);
-    //console.log(a);
+    // Set the element's content to the value of the text property of the "link" object.
     a.textContent = link.text;
+    // Append the new element to the subMenuEl.
     subMenuEl.appendChild(a);
 
   }
 
 }
-// Iterate over the subLinks array, passed as an argument, and for each "link" object:
-// Create an <a> element.
-// Add an href attribute to the <a>, with the value set by the href property of the "link" object.
-// Set the element's content to the value of the text property of the "link" object.
-// Append the new element to the subMenuEl.
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Select and cache the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
-
-// const topMenuLinks = topMenuEl.querySelectorAll(`a`);
-
-// // Attach a delegated 'click' event listener to topMenuEl.
-
-// // // The first line of code of the event listener function should call the event object's preventDefault
-
-
-// topMenuEl.addEventListener('click', function(ev) {
-//      ev.preventDefault(); 
-//     //  console.log(topMenuLinks);
-//     //  console.log(ev.target);
-//     //  console.log(ev.target.textContent);
-//     //  console.log(topMenuLinks.includes(ev.target));
-//      if( topMenuLinks.includes(ev.target)){
-//         console.log(ev.target.textContent);
-//      }
-//      else{
-//         console.log(`element clicked was not 'a'`);
-//      }
-    
-//         });
-
-// // The second line of code of the function should immediately return if the element clicked was not an <a> element.
-
-// // Log the content of the <a> to verify the handler is working.
