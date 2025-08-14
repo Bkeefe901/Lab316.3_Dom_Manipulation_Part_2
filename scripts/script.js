@@ -145,7 +145,7 @@ function clickEvent(e){
 
 // The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
 
-  
+
   
 // Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
     // If the clicked <a> element's "link" object within menuLinks has a subLinks property (all do, except for the "link" object for ABOUT), set the CSS top property of subMenuEl to 100%.
@@ -157,6 +157,7 @@ function clickEvent(e){
     console.log(e.target.classList.contains('active'));
      if(e.target.classList.contains('active')){
       if('subLinks' in link){
+        buildSubmenu(subMenuEl, link.subLinks);
         console.log(subMenuEl.style.top)
         subMenuEl.style.top = '100%';
        }
@@ -170,7 +171,25 @@ function clickEvent(e){
 
 // The submenu needs to be dynamic based on the clicked link. To facilitate that, we will create a helper function called buildSubmenu that does the following:
 
+// Clear the current contents of subMenuEl.
 
+function buildSubmenu(subMenuEl, subLinks){
+  subMenuEl.innerHTML = '';
+  for(link of subLinks){
+    const a = document.createElement('a');
+    a.setAttribute('href', link.href);
+    //console.log(a);
+    a.textContent = link.text;
+    subMenuEl.appendChild(a);
+
+  }
+
+}
+// Iterate over the subLinks array, passed as an argument, and for each "link" object:
+// Create an <a> element.
+// Add an href attribute to the <a>, with the value set by the href property of the "link" object.
+// Set the element's content to the value of the text property of the "link" object.
+// Append the new element to the subMenuEl.
 
 
 
